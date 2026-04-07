@@ -1,21 +1,17 @@
-using System.Buffers.Text;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Cryptography;
-using System.Text;
 using BLOG_API_01.DTO;
 using BLOG_API_01.Handlers;
 using BLOG_API_01.Models;
 using BLOG_API_01.Services;
 using BLOG_API_01.WebDbContext;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BLOG_API_01.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    
+
     public class AuthController : ControllerBase
     {
         private readonly PostgresDbContext _context;
@@ -64,7 +60,7 @@ namespace BLOG_API_01.Controllers
         }
 
 
-        // GET: Get me
+        // GET: Get me (resource filter)
         [Authorize]
         [HttpPost("getme")] // Note: Conventionally, this should probably be [HttpGet("getme")]
         public async Task<IActionResult> GetMe()
@@ -72,8 +68,8 @@ namespace BLOG_API_01.Controllers
             // Cách 1: Tối ưu nhất (Khuyên dùng)
             // Vì bạn đã có [Authorize], ASP.NET Core đã tự động validate và parse JWT.
             // Bạn có thể lấy trực tiếp username từ User claims mà không cần phải tự giải mã JWT nữa:
-            var decode = User.FindFirst("role")?.Value;
-            
+            //var decode = User.FindFirst("role")?.Value;
+
             // Cách 2: Nếu bạn vẫn muốn dùng JWT Service của bạn tự viết (Tháo comment để dùng)
             /*
             var authHeader = Request.Headers.Authorization.ToString();
@@ -84,7 +80,16 @@ namespace BLOG_API_01.Controllers
             var decode = _jwtService.GetUsernameFromToken(token); // Truyền đúng chuỗi token vào (chứ không phải mảng)
             */
 
-            return Ok(new { accessToken = decode });
+            var user_id = User.FindFirst("id")?.Value;
+            var user_role = User.FindFirst(ClaimsIdentity.DefaultRoleClaimType)?.Value;
+            if (user_role == "admin" || user_role == "user")
+            {
+                return Ok(new { role = user_role });
+            }
+            else
+            {
+                return Unauthorized();
+            }
         }
     }
 }
