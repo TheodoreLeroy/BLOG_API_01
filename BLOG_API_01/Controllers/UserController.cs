@@ -8,10 +8,10 @@ namespace BLOG_API_01.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class UserAccountController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly PostgresDbContext _context;
-        public UserAccountController(PostgresDbContext context)
+        public UserController(PostgresDbContext context)
         {
             _context = context;
         }

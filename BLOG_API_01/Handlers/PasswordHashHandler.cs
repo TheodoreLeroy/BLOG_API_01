@@ -19,7 +19,7 @@ namespace BLOG_API_01.Handlers
 
         public bool VerifyHashedPassword(string hashedPassword, string providedPassword)
         {
-            // 1. Tách chuỗi đã lưu thành Salt và Hash gốc
+            
             var parts = hashedPassword.Split('.');
             Console.WriteLine(parts.Length);
             if (parts.Length != 2) return false;

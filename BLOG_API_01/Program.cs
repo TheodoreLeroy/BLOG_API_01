@@ -1,4 +1,5 @@
-﻿using BLOG_API_01.Services;
+﻿using BLOG_API_01.Handlers;
+using BLOG_API_01.Services;
 using BLOG_API_01.WebDbContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +37,7 @@ builder.Services.AddAuthentication(options =>
     var jwtSettings = builder.Configuration.GetSection("JwtSettings");
     options.TokenValidationParameters = new TokenValidationParameters
     {
-
+        SaveSigninToken = true,
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
@@ -50,6 +51,7 @@ builder.Services.AddAuthentication(options =>
 });
 // 3. Business logic
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 //builder.Services.AddScoped<PasswordHashHandler>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -94,6 +96,10 @@ app.UseHttpsRedirection();
 app.UseCors("MyCorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
+//app.UseStaticFiles("/static");
+//app.UseExceptionHandler("/Error");
+//app.MapGet("/", () => { throw new Exception("Lỗi thử nghiệm!"); });
+//app.MapGet("/hehe", () => { throw new Exception("No"); });
 app.MapControllers();
 
 app.Run();
