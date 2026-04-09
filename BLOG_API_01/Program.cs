@@ -51,8 +51,8 @@ builder.Services.AddAuthentication(options =>
 // 3. Business logic
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+builder.Services.AddResponseCaching();
 //builder.Services.AddScoped<PasswordHashHandler>();
-
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 // 4. API infrastructure
 builder.Services.AddControllers();
@@ -90,15 +90,31 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+// ------- Begin Middleware --------
+// 1. Exception handler
+app.UseExceptionHandler("/Error");
+// 2. HTTPS Checker
 app.UseHttpsRedirection();
+//app.UseStaticFiles("/static");
+
+// 3. Routing
+app.UseRouting();
+// 4. CORS
 app.UseCors("MyCorsPolicy");
+// 5. Authentication
 app.UseAuthentication();
 app.UseAuthorization();
-//app.UseStaticFiles("/static");
-//app.UseExceptionHandler("/Error");
+
+// 6. Resource filter
+app.UseResponseCaching();
+
+// 7. MapController
+app.MapControllers();
+
+
+
 //app.MapGet("/", () => { throw new Exception("Lỗi thử nghiệm!"); });
 //app.MapGet("/hehe", () => { throw new Exception("No"); });
-app.MapControllers();
+
 
 app.Run();

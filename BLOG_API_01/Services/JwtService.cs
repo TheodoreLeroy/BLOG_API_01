@@ -47,8 +47,8 @@ namespace BLOG_API_01.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("username", userAccount.UserName),
-                    new Claim(ClaimTypes.Role, userAccount.Role)
+                    new Claim("id", userAccount.Id.ToString()),
+                    new Claim("role", userAccount.Role)
                 }),
                 Expires = tokenExpireTimeStamp,
                 Issuer = issuer,
@@ -107,6 +107,13 @@ namespace BLOG_API_01.Services
             if (principal == null) return null;
 
             return principal.FindFirst("username")?.Value;
+        }
+
+        public string? GetIdFromToken(string token)
+        {
+            var principal = DecodeToken(token);
+            if (principal == null) return null;
+            return principal.FindFirst("id")?.Value;
         }
     }
 }

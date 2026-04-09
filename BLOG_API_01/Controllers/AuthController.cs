@@ -8,15 +8,15 @@ using BLOG_API_01.Handlers;
 using BLOG_API_01.Models;
 using BLOG_API_01.Services;
 using BLOG_API_01.WebDbContext;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BLOG_API_01.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    
+
     public class AuthController : ControllerBase
     {
         private readonly PostgresDbContext _context;
@@ -65,7 +65,7 @@ namespace BLOG_API_01.Controllers
         }
 
 
-        // GET: Get me
+        // GET: Get me (resource filter)
         [Authorize]
         [HttpPost("getme")] // Note: Conventionally, this should probably be [HttpGet("getme")]
         public async Task<IActionResult> GetMe()
