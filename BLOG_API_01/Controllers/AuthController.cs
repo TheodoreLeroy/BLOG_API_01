@@ -1,4 +1,9 @@
-using BLOG_API_01.DTO;
+using System.Buffers.Text;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using BLOG_API_01.DTO.UserRequest;
 using BLOG_API_01.Handlers;
 using BLOG_API_01.Models;
 using BLOG_API_01.Services;
@@ -50,7 +55,7 @@ namespace BLOG_API_01.Controllers
             {
                 Name = request.Name,
                 Email = request.Email,
-                Password = request.Password,
+                Password = _jwtService.HashUserPassword(request.Password),
                 UserName = request.UserName,
                 Role = request.Role
             };
@@ -68,8 +73,8 @@ namespace BLOG_API_01.Controllers
             // Cách 1: Tối ưu nhất (Khuyên dùng)
             // Vì bạn đã có [Authorize], ASP.NET Core đã tự động validate và parse JWT.
             // Bạn có thể lấy trực tiếp username từ User claims mà không cần phải tự giải mã JWT nữa:
-            //var decode = User.FindFirst("role")?.Value;
-
+            var role = User.FindFirst(ClaimTypes.Role)?.Value;
+            
             // Cách 2: Nếu bạn vẫn muốn dùng JWT Service của bạn tự viết (Tháo comment để dùng)
             /*
             var authHeader = Request.Headers.Authorization.ToString();
@@ -80,16 +85,7 @@ namespace BLOG_API_01.Controllers
             var decode = _jwtService.GetUsernameFromToken(token); // Truyền đúng chuỗi token vào (chứ không phải mảng)
             */
 
-            var user_id = User.FindFirst("id")?.Value;
-            var user_role = User.FindFirst(ClaimsIdentity.DefaultRoleClaimType)?.Value;
-            if (user_role == "admin" || user_role == "user")
-            {
-                return Ok(new { role = user_role });
-            }
-            else
-            {
-                return Unauthorized();
-            }
+            return Ok(new { Role = role });
         }
     }
 }

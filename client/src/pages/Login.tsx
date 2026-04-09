@@ -1,39 +1,42 @@
 ﻿/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function Login() {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const navigate = useNavigate();
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        
         try {
             const response = await axios({
                 method: 'POST',
-                url: 'http://localhost:5034/api/Auth/Login',
+                url: 'http://localhost:5034/api/auth/login',
                 data: {
-                    username: username,
-                    password: password,
+                username: username,
+                password: password,
                 }
             });
 
-            if (response.status === 200) {
-                console.log("Đăng nhập thành công!");
-
-                // 4. Lưu Token (Rất quan trọng để Dashboard biết bạn đã login)
-                if (response.data.accessToken) {
-                    localStorage.setItem('token', response.data.accessToken);
+            if (response.status == 200) {
+                const accessToken = response.data.accessToken;
+                if (accessToken) {
+                    localStorage.setItem('accessToken', accessToken);
+                    console.log('Successfully save token!')
                 }
-
-                // 5. Chuyển hướng
-                navigate('/Dashboard');
+                if (response.data.role == 'admin') {
+                    console.log('navigating to dashboard!');
+                    navigate('/Dashboard');
+                } else {
+                    console.log('navigating to other!');
+                    navigate('/Blog');
+                }
             }
+
+            console.log(response);
         } catch (error: any) {
-            console.error("Lỗi:", error.response?.data || error.message);
-            alert(error.response?.data || "Sai email hoặc mật khẩu!");
+            console.log('Incorrect password!');
         }
     };
 
@@ -53,7 +56,7 @@ function Login() {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
-                            placeholder="admin123"
+                            placeholder="admin"
                             required
                         />
                     </div>

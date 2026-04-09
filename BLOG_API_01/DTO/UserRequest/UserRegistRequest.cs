@@ -1,4 +1,4 @@
-﻿namespace BLOG_API_01.DTO
+﻿namespace BLOG_API_01.DTO.UserRequest
 {
     public class UserRegistRequest
     {

@@ -3,6 +3,7 @@ using System;
 using BLOG_API_01.WebDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BLOG_API_01.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    partial class PostgresDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260409055754_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,20 +150,6 @@ namespace BLOG_API_01.Migrations
             modelBuilder.Entity("BLOG_API_01.Models.User", b =>
                 {
                     b.Navigation("blogId");
-                });
-
-            modelBuilder.Entity("BLOG_API_01.Models.Blog", b =>
-                {
-                    b.HasOne("BLOG_API_01.Models.User", null)
-                        .WithMany("Blogs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BLOG_API_01.Models.User", b =>
-                {
-                    b.Navigation("Blogs");
                 });
 #pragma warning restore 612, 618
         }

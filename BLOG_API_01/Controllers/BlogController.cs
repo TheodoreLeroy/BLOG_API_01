@@ -1,5 +1,10 @@
-﻿using BLOG_API_01.WebDbContext;
+﻿using BLOG_API_01.DTO.BlogRequest;
+using BLOG_API_01.Models;
+using BLOG_API_01.WebDbContext;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BLOG_API_01.Controllers
 {
@@ -13,11 +18,34 @@ namespace BLOG_API_01.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetBlogs()
+        // GET: Get all blogs
+        [HttpGet("blogs")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetBlogsRequest()
         {
+            var blogs = await _context.Blogs.ToListAsync();
+            return Ok(blogs);
+        }
 
-            return Ok();
+        // POST: Create new blog
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateNewBlogRequest(CreateBlogRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest("Request null!");
+            }
+            var blog = new Blog
+            {
+                BlogTitle = request.BlogTitle,
+                BlogContent = request.BlogContent,
+                BlogCreateTime = DateTime.Now,
+                UserId = request.UserId,
+            };
+            await _context.Blogs.AddAsync(blog);
+            await _context.SaveChangesAsync();
+            return Ok(blog);
         }
     }
 }
