@@ -42,7 +42,7 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-
+        RoleClaimType = "admin",
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
@@ -92,15 +92,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 // ------- Begin Middleware --------
-// 1. Exception handler
+// 1. Exception handler (catch error before futher step)
 app.UseExceptionHandler("/Error");
 // 2. HTTPS Checker
 app.UseHttpsRedirection();
-//app.UseStaticFiles("/static");
-
-// 3. Routing
+// 3. Routing (check where this URL lead to)
 app.UseRouting();
-// 4. CORS
+// 4. CORS (allow specific request from wanted address)
 app.UseCors("MyCorsPolicy");
 // 5. Authentication
 app.UseAuthentication();
@@ -109,7 +107,7 @@ app.UseAuthorization();
 // 6. Resource filter
 app.UseResponseCaching();
 
-// 7. MapController
+// 7. MapController (find controller)
 app.MapControllers();
 
 

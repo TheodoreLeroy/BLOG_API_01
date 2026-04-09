@@ -19,18 +19,18 @@ namespace BLOG_API_01.Handlers
 
         public bool VerifyHashedPassword(string hashedPassword, string providedPassword)
         {
-            
+
             var parts = hashedPassword.Split('.');
             Console.WriteLine(parts.Length);
             if (parts.Length != 2) return false;
 
             var salt = Convert.FromBase64String(parts[0]);
             var originalHash = Convert.FromBase64String(parts[1]);
-            // 2. Dùng Salt cũ để băm lại Password mà người dùng vừa nhập vào
+
             using var hmac = new HMACSHA512(salt);
             var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(providedPassword));
 
-            // 3. So sánh từng byte một để tránh tấn công Timing Attack
+
             for (int i = 0; i < computedHash.Length; i++)
             {
                 if (computedHash[i] != originalHash[i]) return false;

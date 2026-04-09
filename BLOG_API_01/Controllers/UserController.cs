@@ -22,5 +22,18 @@ namespace BLOG_API_01.Controllers
             var userList = await _context.Users.ToListAsync();
             return Ok(userList);
         }
+
+        [HttpDelete("DeleteUser")]
+        public async Task<IActionResult> DeleteUser(string username)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+            if (user == null)
+            {
+                return BadRequest("No user found!");
+            }
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return Ok("Delete successful");
+        }
     }
 }

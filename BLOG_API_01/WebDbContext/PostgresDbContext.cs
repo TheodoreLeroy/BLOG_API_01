@@ -13,6 +13,7 @@ namespace BLOG_API_01.WebDbContext
 
         // provide table
         public DbSet<User> Users { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,12 +21,18 @@ namespace BLOG_API_01.WebDbContext
 
             base.OnModelCreating(modelBuilder);
 
-            _ = modelBuilder.Entity<User>()
-                .Property(u => u.Password)
-                .HasConversion(
-                v => passwordHashHandler.HashPassword(v),
-                v => v
-                );
+            // Cấu hình Entity User
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(u => u.Password)
+                      .HasConversion(
+                          v => passwordHashHandler.HashPassword(v),
+                          v => v
+                      );
+                entity.HasMany(u => u.Blogs)
+                      .WithOne()
+                      .HasForeignKey("UserId");
+            });
         }
     }
 }
