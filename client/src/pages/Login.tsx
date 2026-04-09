@@ -1,12 +1,43 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function Login() {
-    const [email, setEmail] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const navigate = useNavigate();
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log({ email, password });
-        alert('Ok!');
+        
+        try {
+            const response = await axios({
+                method: 'POST',
+                url: 'http://localhost:5034/api/auth/login',
+                data: {
+                username: username,
+                password: password,
+                }
+            });
+
+            if (response.status == 200) {
+                const accessToken = response.data.accessToken;
+                if (accessToken) {
+                    localStorage.setItem('accessToken', accessToken);
+                    console.log('Successfully save token!')
+                }
+                if (response.data.role == 'admin') {
+                    console.log('navigating to dashboard!');
+                    navigate('/Dashboard');
+                } else {
+                    console.log('navigating to other!');
+                    navigate('/Blog');
+                }
+            }
+
+            console.log(response);
+        } catch (error: any) {
+            console.log('Incorrect password!');
+        }
     };
 
     return (
@@ -18,13 +49,13 @@ function Login() {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Email</label>
+                        <label className="block text-sm font-medium text-gray-700">Username</label>
                         <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 outline-none"
-                            placeholder="admin@example.com"
+                            placeholder="admin"
                             required
                         />
                     </div>

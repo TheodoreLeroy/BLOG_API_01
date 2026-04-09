@@ -1,4 +1,5 @@
-﻿using BLOG_API_01.DTO;
+﻿using BLOG_API_01.DTO.UserRequest;
+using BLOG_API_01.DTO.UserResponse;
 using BLOG_API_01.Handlers;
 using BLOG_API_01.WebDbContext;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,11 @@ namespace BLOG_API_01.Services
         {
             _context = context;
             _configuration = configuration;
+        }
+
+        public string HashUserPassword(string password)
+        {
+            return _passwordHashHandler.HashPassword(password);
         }
 
         public async Task<UserLoginResponse> Authenticate(UserLoginRequest request)
@@ -58,6 +64,7 @@ namespace BLOG_API_01.Services
             return new UserLoginResponse
             {
                 AccessToken = accessToken,
+                Role = userAccount.Role
             };
         }
 
