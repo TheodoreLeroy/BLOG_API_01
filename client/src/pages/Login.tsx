@@ -2,24 +2,43 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axiosInstance from '@services/axiosClient';
 function Login() {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const navigate = useNavigate();
+    const apiUrl = "http://localhost:5034/api/auth/login";
+
+
+    // auto delete token when go to login
+    localStorage.removeItem('accessToken');
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
         try {
-            const response = await axios({
+            // option 1
+            /* const response = await axios({
                 method: 'POST',
-                url: 'http://localhost:5034/api/auth/login',
+                url: apiUrl,
                 data: {
                 username: username,
                 password: password,
                 }
-            });
+            }); */
 
-            if (response.status == 200) {
+            // option 2
+
+            const response = await axiosInstance.post(
+                apiUrl,
+                {
+                    username: username,
+                    password: password,
+                }
+            )
+            
+
+            if (response.status == 200 || response.status == 201) {
                 const accessToken = response.data.accessToken;
                 if (accessToken) {
                     localStorage.setItem('accessToken', accessToken);
@@ -27,10 +46,10 @@ function Login() {
                 }
                 if (response.data.role == 'admin') {
                     console.log('navigating to dashboard!');
-                    navigate('/Dashboard');
+                    navigate('/dashboard');
                 } else {
                     console.log('navigating to other!');
-                    navigate('/Blog');
+                    navigate('/blog');
                 }
             }
 

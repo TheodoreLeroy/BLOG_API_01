@@ -55,7 +55,7 @@ namespace BLOG_API_01.Migrations
                         {
                             Id = 1,
                             BlogContent = "qwefuhudvuohwuefquowegfyqwbefhshdhbdkvawe",
-                            BlogCreateTime = new DateTime(2026, 4, 9, 5, 57, 54, 298, DateTimeKind.Utc).AddTicks(5265),
+                            BlogCreateTime = new DateTime(2026, 4, 9, 12, 27, 50, 170, DateTimeKind.Utc).AddTicks(6534),
                             BlogTitle = "Nghị luận xã hội 1",
                             UserId = 1
                         },
@@ -63,7 +63,7 @@ namespace BLOG_API_01.Migrations
                         {
                             Id = 2,
                             BlogContent = "qwefuhudvuohwuefquowegfyqwbefhshdhbdkvawe",
-                            BlogCreateTime = new DateTime(2026, 4, 9, 5, 57, 54, 298, DateTimeKind.Utc).AddTicks(5268),
+                            BlogCreateTime = new DateTime(2026, 4, 9, 12, 27, 50, 170, DateTimeKind.Utc).AddTicks(6537),
                             BlogTitle = "Nghị luận xã hội 2",
                             UserId = 2
                         },
@@ -71,7 +71,7 @@ namespace BLOG_API_01.Migrations
                         {
                             Id = 3,
                             BlogContent = "qwefuhudvuohwuefquowegfyqwbefhshdhbdkvawe",
-                            BlogCreateTime = new DateTime(2026, 4, 9, 5, 57, 54, 298, DateTimeKind.Utc).AddTicks(5271),
+                            BlogCreateTime = new DateTime(2026, 4, 9, 12, 27, 50, 170, DateTimeKind.Utc).AddTicks(6538),
                             BlogTitle = "Nghị luận xã hội 3",
                             UserId = 2
                         });
@@ -111,7 +111,7 @@ namespace BLOG_API_01.Migrations
                             Id = 1,
                             Email = "HA@gmail.com",
                             Name = "HA",
-                            Password = "wWX71uyG0FBhhrJYi3DvoticP3X1EyVjXlVanzVH9bruG/l1gahbOG1kouLbhDJ7HLQq72NZIOtZn8tHGQUDSfRtAEm/BMlm5rE9NUP/TWnWbIBKhM0AOkTB2et2jw6tFOmiZOf8Dd1GnYLQP7NEqqqXeVrJ6FCb9BYAxIi4/8o=.eFAT5NHpAVIOFx2V4UxHOPU5iA5s67Fqloamp8PGmPiDVcMKjRe/BeWOL7KyCNYOn9UFPyG/S1kPhGeREsXcog==",
+                            Password = "8LOW4OrE3h0wlXm1P9ewPEwXO3PtaJrHdqjLEVSzi86YWMLsU9LM+YHOQSrBIXS4yT5rJa4WdnGRPNfTMMP0+hnk3zwOPkgHJDf8IrlUiFXNo+oYkWBi84jEVCNQyAdZionJZUljE7yDg22luIiznWSgnHciUt0kb+/89ObWhBo=.FemWYCzSGQxTlyEU9Ow6XqQhv7DxlIm8kX7kil33sUHdo74VatWGMbSqLXminFtr3b8S93ilD7Fo6zypUcIECw==",
                             Role = "admin",
                             UserName = "kenshin4125"
                         },
@@ -120,7 +120,7 @@ namespace BLOG_API_01.Migrations
                             Id = 2,
                             Email = "TQ@gmail.com",
                             Name = "TQ",
-                            Password = "cENlO0nEtBxskcA5y12SeLgmfR2Ap5ZWSwDD1iYevSZpHFfFF5Ykj2xWh5eq0HYttlCC8cHwVEb4E9OuBAEvV0F2qRlOnPcJf5G5VNDOkd/7uumxS5lTnXkDWXZuyUwyZ77x8L0cnlB3XDGYTOSqd9R9esInwXMm4CP6gOYv2AU=.98C08JQdxgBufmra/bjYVIljiS1H8NWj8zta9uAyNlCpZMQbO0qr0iBTF8ORUbkNU0F+MtjZVnR5gB4+HAwRwg==",
+                            Password = "lb2737W9dE5LNuZrugTsXWgyzwUzla55DkAu6A/CFK37gDeOWMHu4vCWQdPfQ8AzMzKJr5TDKJto/hVFStlRbgYhmcn5il55lZV1X8m/iqXjmt+NkkTyYdWQI3wuPT2JASTrv49bLJ5XrZ9yj4GdFWB4JkK/W6/eoPmLFBlbhiE=.sBG0ljosNDKWD9A+LvUE8neRTB2XC4z1eGHCPt2o3l8uybivqFsw0wcvLBlTQEcMLzYocpLyLpmceOkvoRuSLA==",
                             Role = "user",
                             UserName = "cuteyb"
                         },
@@ -129,7 +129,7 @@ namespace BLOG_API_01.Migrations
                             Id = 3,
                             Email = "he@gmail.com",
                             Name = "hehe1",
-                            Password = "Uh7KJzez2JdpkgZhtpR+wdhXj/ij4VgrS29P1CQf5n85h5EehlM/i9cY6PjNBNAfmGDdxCYS/qReUtbKaLG+2YlLw2cVOqMTWD1RarHl7xRoslCgu/y8+pnXZQSsvpkyF+0Zyiks3A4FJ1SnV/QnPZuG7j5EuPJZYyuaDCKj0v4=.K1/xQx8dIZdgmdyBQ9jT6bWhRyRs7RXJDE8whKvLGBDmZech8KXsKcWL37M0Zpoa+Oml8ubQ4+JTrSYA3UEpbg==",
+                            Password = "ng61X4d8J/mNag2fkDjuOLFI9voWLvRcxhVgIO0a31HkCeePhFPPCcImkz/WbMG55WI+hNGz/QUgyRhejSCY5AR8TLsIqOPwSW9ImDAw+IZZS4bNRCZ/tFLGcrtTZGepU4dU5OZgWXBNQjS2+HOxm8GPsRg2yheWRtjAlT93L80=.h4+JZdoASMhWhMs++nRFI9ysTL80vAgrvDT57WvuTTbtomSNAfetEWcIaibvNp3gBlLckPaHlt2c5uQxMJpeRw==",
                             Role = "user",
                             UserName = "hehe"
                         });
@@ -147,20 +147,6 @@ namespace BLOG_API_01.Migrations
             modelBuilder.Entity("BLOG_API_01.Models.User", b =>
                 {
                     b.Navigation("blogId");
-                });
-
-            modelBuilder.Entity("BLOG_API_01.Models.Blog", b =>
-                {
-                    b.HasOne("BLOG_API_01.Models.User", null)
-                        .WithMany("Blogs")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BLOG_API_01.Models.User", b =>
-                {
-                    b.Navigation("Blogs");
                 });
 #pragma warning restore 612, 618
         }

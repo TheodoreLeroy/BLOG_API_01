@@ -83,7 +83,7 @@ namespace BLOG_API_01.WebDbContext
            .WithMany(u => u.blogId)    // User có nhiều Blog (blogId là tên bạn đặt)
            .HasForeignKey(b => b.UserId) // Khóa ngoại là UserId
            .OnDelete(DeleteBehavior.Cascade); // Xóa user thì xóa luôn blog
-            
+
         }
     }
 }

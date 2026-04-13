@@ -1,8 +1,3 @@
-using System.Buffers.Text;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 using BLOG_API_01.DTO.UserRequest;
 using BLOG_API_01.Handlers;
 using BLOG_API_01.Models;
@@ -30,7 +25,7 @@ namespace BLOG_API_01.Controllers
 
         // POST: User login
         [AllowAnonymous]
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> UserLoginRequest(UserLoginRequest request)
         {
             var result = await _jwtService.Authenticate(request);
@@ -44,7 +39,7 @@ namespace BLOG_API_01.Controllers
 
         // POST: Register a new user
         [AllowAnonymous]
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<IActionResult> RegistNewUserRequest(UserRegistRequest request)
         {
             if (request == null)
@@ -67,25 +62,25 @@ namespace BLOG_API_01.Controllers
 
         // GET: Get me (resource filter)
         [Authorize]
-        [HttpPost("getme")] // Note: Conventionally, this should probably be [HttpGet("getme")]
+        [HttpGet("getme")] // Note: Conventionally, this should probably be [HttpGet("getme")]
         public async Task<IActionResult> GetMe()
         {
-            // Cách 1: Tối ưu nhất (Khuyên dùng)
-            // Vì bạn đã có [Authorize], ASP.NET Core đã tự động validate và parse JWT.
-            // Bạn có thể lấy trực tiếp username từ User claims mà không cần phải tự giải mã JWT nữa:
-            var role = User.FindFirst(ClaimTypes.Role)?.Value;
-            
-            // Cách 2: Nếu bạn vẫn muốn dùng JWT Service của bạn tự viết (Tháo comment để dùng)
-            /*
-            var authHeader = Request.Headers.Authorization.ToString();
-            if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
-                return Unauthorized();
-            
-            var token = authHeader.Substring(7); // Cắt bỏ chữ "Bearer " để lấy mỗi chuỗi token
-            var decode = _jwtService.GetUsernameFromToken(token); // Truyền đúng chuỗi token vào (chứ không phải mảng)
-            */
+            //// Cách 1: Tối ưu nhất (Khuyên dùng)
+            //// Vì bạn đã có [Authorize], ASP.NET Core đã tự động validate và parse JWT.
+            //// Bạn có thể lấy trực tiếp username từ User claims mà không cần phải tự giải mã JWT nữa:
+            var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
 
-            return Ok(new { Role = role });
+            //// Cách 2: Nếu bạn vẫn muốn dùng JWT Service của bạn tự viết (Tháo comment để dùng)
+            ///*
+            //var authHeader = Request.Headers.Authorization.ToString();
+            //if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
+            //    return Unauthorized();
+
+            //var token = authHeader.Substring(7); // Cắt bỏ chữ "Bearer " để lấy mỗi chuỗi token
+            //var decode = _jwtService.GetUsernameFromToken(token); // Truyền đúng chuỗi token vào (chứ không phải mảng)
+            //*/
+
+            return Ok(new { role = userRole });
         }
     }
 }

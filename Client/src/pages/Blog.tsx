@@ -17,9 +17,7 @@ function Blog() {
         const fetchBlogs = async () => {
             try {
                 const response = await axiosInstance.get("/Blog/blogs");
-                console.log(axiosInstance.get("/Blog/blogs"));
                 if (response.status === 200) {
-                    console.log(response.data);
                     setBlogs(response.data); // Update state
                 }
             } catch (error: any) {
@@ -30,18 +28,18 @@ function Blog() {
         fetchBlogs();
     }, []); // Empty dependency array means this runs once on mount
 
-
+    const listItem = blogs.map(blog => <li key={blog.id}>
+        <h2>{blog.blogTitle}</h2>
+        <p>{blog.blogContent}</p>
+    </li>)
+    console.log(blogs);
     return (
         <>
-            <button className="w-fit h-fit bg-red-500 cursor-pointer" onClick={handleLogout}>Logout</button>
+            <button className="h-fit w-fit cursor-pointer bg-red-500" onClick={handleLogout}>Logout</button>
             <div className="mt-4">
                 <h1 className="text-xl font-bold">Blog List</h1>
                 {/* Map through your blogs here */}
-                {blogs.map((blog: any) => (
-                    <div key={blog.id} className="border-b py-2">
-                        {blog.title}
-                    </div>
-                ))}
+                {listItem}
             </div>
         </>
 
