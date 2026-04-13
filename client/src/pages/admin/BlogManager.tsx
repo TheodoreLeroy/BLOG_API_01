@@ -1,0 +1,1 @@
+import AdminPageLayout from '@layouts/AdminPageLayout';
