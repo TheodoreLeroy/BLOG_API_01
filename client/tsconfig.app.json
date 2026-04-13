@@ -1,44 +1,34 @@
 {
-  "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "ES2023",
-    "useDefineForClassFields": true,
-    "lib": [ "ES2023", "DOM", "DOM.Iterable" ],
-    "module": "ESNext",
-    "types": [ "vite/client" ],
-    "skipLibCheck": true,
+    "compilerOptions": {
+        "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+        "target": "es2023",
+        "lib": ["ES2023", "DOM", "DOM.Iterable"],
+        "module": "esnext",
+        "types": ["vite/client"],
+        "skipLibCheck": true,
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "jsx": "react-jsx",
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "verbatimModuleSyntax": true,
+        "moduleDetection": "force",
+        "noEmit": true,
+        "jsx": "react-jsx",
 
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true,
+        /* Linting */
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "erasableSyntaxOnly": true,
+        "noFallthroughCasesInSwitch": true,
 
-
-    "baseUrl": "",
-    "paths": {
-      "@/*": [ "src/*" ],
-      "@admin/*": [ "src/pages/admin/*" ],
-      "@pages/*": [ "src/pages/*" ],
-      "@layouts/*": [ "src/components/layouts/*" ],
-      "@services/*": [ "src/services/*" ]
+        /* Resolve path */
+        "paths": {
+            "@/*": ["./src/*"],
+            "@components/*": ["./src/components/*"],
+            "@pages/*": ["./src/pages/*"],
+            "@assets/*": ["./src/assets/*"],
+            "@services/*": ["./src/services/*"]
+        }
     },
-
-    // Enabel typescript debugging
-    "sourceMap": true,
-    "outDir": "./dist",
-    "allowJs": true
-  },
-
-    "include": [ "src" ]
-  }
+    "include": ["src"]
+}

@@ -1,26 +1,21 @@
-import { defineConfig } from 'vite';
-import plugin from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
-import path from 'path';
-// https://vitejs.dev/config/
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+
+import path from "path";
+// https://vite.dev/config/
 export default defineConfig({
-    plugins: [plugin(), tailwindcss()],
-    build: {
-        sourcemap: true // create source map when build
-    },
+    plugins: [react(), tailwindcss()],
     server: {
-        port: 53596,
+        port: 5302,
     },
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, './src'),
-            '@constants': path.resolve(__dirname, './src/constants'),
-            '@components': path.resolve(__dirname, './src/components'),
-            '@pages': path.resolve(__dirname, './src/pages'),
-            '@admin': path.resolve(__dirname, './src/pages/admin'),
-            '@services': path.resolve(__dirname, './src/services'),
-            '@layouts': path.resolve(__dirname, './src/components/layouts'),
-            
-        }
-    }
-})
+            "@": path.resolve(__dirname, "./src"),
+            "@components": path.resolve(__dirname, "./src/components"),
+            "@pages": path.resolve(__dirname, "./src/pages"),
+            "@assets": path.resolve(__dirname, "./src/assets"),
+            "@services": path.resolve(__dirname, "./src/services"),
+        },
+    },
+});
