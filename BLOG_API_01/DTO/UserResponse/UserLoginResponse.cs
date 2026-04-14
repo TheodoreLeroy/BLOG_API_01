@@ -3,6 +3,5 @@
     public class UserLoginResponse
     {
         public string? AccessToken { get; set; }
-        public string? Role { get; set; }
     }
 }
