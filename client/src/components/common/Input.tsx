@@ -1,16 +1,12 @@
-interface Props {
-    type?: string;
-    label?: string;
-    message?: string;
-}
-
-export const Input = ({ type, label, message }: Props) => {
+export const Input = ({ ...props }) => {
     return (
         <>
-            <label className="my-3">{label}</label>
-            <div className="border-1 border-gray-400 rounded-[0.7rem] py-[0.4rem]">
-                <input type={type} placeholder={message} className="px-3" />
-            </div>
+            <input
+                {...props}
+                className="w-full rounded-xl border border-gray-300 p-4 text-sm 
+                 placeholder:text-gray-400 focus:border-[#8B5CF6] 
+                 focus:ring-[#8B5CF6] outline-none transition-all"
+            />
         </>
     );
 };
