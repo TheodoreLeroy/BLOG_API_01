@@ -63,8 +63,9 @@ namespace BLOG_API_01.Services
 
             return new UserLoginResponse
             {
+                UserName = userAccount.Name,
+                Role = userAccount.Role,
                 AccessToken = accessToken,
-                Role = userAccount.Role
             };
         }
 

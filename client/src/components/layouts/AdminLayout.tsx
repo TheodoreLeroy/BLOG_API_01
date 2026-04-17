@@ -1,7 +1,7 @@
 import { type JSX } from "react";
 import { Outlet } from "react-router-dom";
 
-export default function AuthLayout() {
+export default function AdminLayout() {
     return (
         <div
             id="auth-container"

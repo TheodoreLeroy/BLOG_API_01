@@ -18,10 +18,16 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 // Axios response
-axiosInstance.interceptors.response.use((error) => {
-    // Check if response is unauthorize
-    if (error.status === 401) {
-        window.location.href = "/error";
+axiosInstance.interceptors.response.use(
+    (response) => {
+        // Check if response ok
+        if (response.status === 200 || response.status === 201) return response;
+    },
+    (error) => {
+        // // Check if response is unauthorize
+        // if (error.status === 401) {
+        //     window.location.href = "/error";
+        // }
+        return Promise.reject(error);
     }
-    return Promise.reject(error);
-});
+);

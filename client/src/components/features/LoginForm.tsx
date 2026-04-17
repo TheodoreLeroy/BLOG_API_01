@@ -3,10 +3,14 @@ import { Button } from "../commons/Button";
 import { Input } from "../commons/Input";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { LoginService } from "@/services/authService";
+import { GetMeService, LoginService } from "@/services/authService";
 import { useForm } from "react-hook-form";
 
 export const LoginForm = () => {
+    console.log("login page");
+    const navigate = useNavigate();
+    const { login, loading, isAuthenticated } = useAuth();
+    const [failLogin, setFailLogin] = useState(true);
     const {
         register,
         handleSubmit,
@@ -15,15 +19,19 @@ export const LoginForm = () => {
 
     // Handler form submit
     const onSubmit = async (data) => {
-        // console.log("ok", data);
         try {
             // 1. login service handle
-            const responseData = await LoginService({
+            const response = await LoginService({
                 username: data.username,
                 password: data.password,
             });
-            console.log("Dữ liệu gửi đi: ", data);
+
+            if (response.status === 200 || response.status === 201) {
+                // 2. save user to context
+                login(response.data);
+            }
         } catch (error) {
+            setFailLogin(false);
             console.error("Fail login:", error);
         }
     };
@@ -68,6 +76,13 @@ export const LoginForm = () => {
                     <p className="text-red-600 font-bold text-xl">
                         {errors.password.message as string}
                     </p>
+                )}
+                {!failLogin ? (
+                    <p className="text-2xl text-red-500 font-bold">
+                        User not exist
+                    </p>
+                ) : (
+                    ""
                 )}
                 <Button
                     type="submit"
