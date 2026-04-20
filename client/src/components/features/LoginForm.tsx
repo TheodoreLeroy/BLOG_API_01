@@ -3,14 +3,14 @@ import { Button } from "../commons/Button";
 import { Input } from "../commons/Input";
 import { useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
-import { GetMeService, LoginService } from "@/services/authService";
 import { useForm } from "react-hook-form";
 
 export const LoginForm = () => {
-    console.log("login page");
-    const navigate = useNavigate();
     const { login, loading, isAuthenticated } = useAuth();
-    const [failLogin, setFailLogin] = useState(true);
+    const [failLogin, setFailLogin] = useState(false);
+    // const [failLoginMessage, setFailLoginMessage] = useState<string | null>(
+    //     null,
+    // );
     const {
         register,
         handleSubmit,
@@ -20,19 +20,10 @@ export const LoginForm = () => {
     // Handler form submit
     const onSubmit = async (data) => {
         try {
-            // 1. login service handle
-            const response = await LoginService({
-                username: data.username,
-                password: data.password,
-            });
-
-            if (response.status === 200 || response.status === 201) {
-                // 2. save user to context
-                login(response.data);
-            }
+            login(data);
         } catch (error) {
-            setFailLogin(false);
-            console.error("Fail login:", error);
+            setFailLogin(true);
+            console.error("Fail login:", error.data);
         }
     };
 
@@ -77,15 +68,14 @@ export const LoginForm = () => {
                         {errors.password.message as string}
                     </p>
                 )}
-                {!failLogin ? (
-                    <p className="text-2xl text-red-500 font-bold">
-                        User not exist
-                    </p>
+                {failLogin ? (
+                    <p className="text-2xl text-red-500 font-bold">dafuq</p>
                 ) : (
                     ""
                 )}
                 <Button
                     type="submit"
+                    variant="primary"
                     message={isSubmitting ? "Logging in..." : "Sign In"}
                     disabled={isSubmitting}
                 />
