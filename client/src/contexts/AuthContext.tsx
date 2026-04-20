@@ -1,18 +1,24 @@
-import { GetMeService } from "@/services/authService";
-import type { AxiosResponse } from "axios";
+// import type { AxiosResponse } from "axios";
+import { AuthSerivce } from "@/services/authService";
 import { createContext, useState, type JSX, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 interface User {
+    id: number;
     username: string;
     role: string;
+}
+
+interface UserLoginRequest {
+    username: string;
+    password: string;
 }
 
 interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
     loading: boolean;
-    login: (userData: User) => void;
+    login: (userData: UserLoginRequest) => void;
     logout: () => void;
 }
 
@@ -25,49 +31,59 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({ children }: AuthProps) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+    console.log(user);
     const navigate = useNavigate();
     // Check access token page first load
     useEffect(() => {
-        const checkToken = async () => {
-            const token = localStorage.getItem("accessToken");
-
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-
+        const checkAuth = async () => {
+            const accessToken = localStorage.getItem("accessToken");
             try {
-                const response = await GetMeService();
-                setUser(response.data);
+                if (!accessToken) {
+                    await setUser(null);
+                    throw new Error("No access token");
+                }
+
+                const getMeRespo
+
+                return;
             } catch (error) {
-                localStorage.removeItem("accessToken");
-                setUser(null);
+                console.log(error.message);
+                navigate("/");
             } finally {
                 setLoading(false);
             }
         };
 
-        checkToken();
+        checkAuth();
     }, []);
 
-    const login = (responseData?: any) => {
-        // Handler login
-        const username = responseData.username;
-        const role = responseData.role;
-        setUser({ username: username, role: role });
-        // Save token
-        localStorage.setItem("accessToken", responseData.accessToken);
+    const login = async (requestData?: UserLoginRequest) => {
+        try {
+            // Handler login
+            const serviceResponse = await AuthSerivce.login(requestData);
+            const userExtract = serviceResponse.user;
+            // Set user
+            setUser({
+                id: userExtract.id,
+                username: userExtract.username,
+                role: userExtract.role,
+            });
+            // Save token
+            localStorage.setItem("accessToken", serviceResponse.accessToken);
 
-        // Navigate
-        if (role === "admin") {
-            navigate("/admin/dashboard");
-        } else {
-            navigate("/home");
+            // Navigate
+            if (userExtract.role === "admin") {
+                navigate("/admin/dashboard");
+            } else {
+                navigate("/home");
+            }
+        } catch (error) {
+            alert(error.data);
         }
     };
 
-    const logout = () => {
-        setUser(null);
+    const logout = async () => {
+        await setUser(null);
         localStorage.removeItem("accessToken");
     };
 
