@@ -40,7 +40,7 @@ export const AuthSerivce = {
         }
     },
 
-    async getme(accessToken: string): Promise<User> {
+    async getme(): Promise<User> {
         try {
             const response = await axiosInstance.get("/auth/getme");
             const responseData = response?.data;
