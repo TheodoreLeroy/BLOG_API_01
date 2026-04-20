@@ -47,8 +47,9 @@ namespace BLOG_API_01.Services
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim("id", userAccount.Id.ToString()),
-                    new Claim("role", userAccount.Role)
+                    new Claim(ClaimTypes.NameIdentifier, userAccount.Id.ToString()),
+                    new Claim(ClaimTypes.Name, userAccount.UserName),
+                    new Claim(ClaimTypes.Role, userAccount.Role)
                 }),
                 Expires = tokenExpireTimeStamp,
                 Issuer = issuer,
@@ -64,7 +65,6 @@ namespace BLOG_API_01.Services
             return new UserLoginResponse
             {
                 AccessToken = accessToken,
-                Role = userAccount.Role
             };
         }
 
