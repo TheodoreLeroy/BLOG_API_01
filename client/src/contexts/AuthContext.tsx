@@ -1,7 +1,8 @@
 // import type { AxiosResponse } from "axios";
-import { AuthSerivce } from "@/services/authService";
+import { AuthService } from "@/services/authService";
+import { axiosInstance } from "@/services/axiosClient";
 import { createContext, useState, type JSX, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 
 interface User {
     id: number;
@@ -18,6 +19,7 @@ interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
     loading: boolean;
+    finishLoading: (state: boolean) => void;
     login: (userData: UserLoginRequest) => void;
     logout: () => void;
 }
@@ -30,37 +32,31 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: AuthProps) => {
     const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
-    console.log(user);
+    const [loading, setLoading] = useState<boolean>(true);
     const navigate = useNavigate();
-    // Check access token page first load
+
     useEffect(() => {
-        const checkAuth = async () => {
-            const accessToken = localStorage.getItem("accessToken");
-            try {
-                if (!accessToken) {
-                    await setUser(null);
-                    throw new Error("No access token");
-                }
-
-                const getMeRespo
-
-                return;
-            } catch (error) {
-                console.log(error.message);
-                navigate("/");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        checkAuth();
+        // call getme
+        axiosInstance
+            .get("/auth/getme")
+            // ok response
+            .then((response) => {
+                const data = response.data;
+                setUser({
+                    id: data["id"],
+                    username: data["username"],
+                    role: data["role"],
+                });
+            })
+            // unauthorize
+            .catch(() => setUser(null))
+            .finally(() => setLoading(false));
     }, []);
 
     const login = async (requestData?: UserLoginRequest) => {
         try {
             // Handler login
-            const serviceResponse = await AuthSerivce.login(requestData);
+            const serviceResponse = await AuthService.login(requestData);
             const userExtract = serviceResponse.user;
             // Set user
             setUser({
@@ -79,18 +75,25 @@ export const AuthProvider = ({ children }: AuthProps) => {
             }
         } catch (error) {
             alert(error.data);
+        } finally {
+            setLoading(false);
         }
     };
 
-    const logout = async () => {
-        await setUser(null);
+    const logout = () => {
+        setUser(null);
         localStorage.removeItem("accessToken");
+    };
+
+    const finishLoading = (state: boolean) => {
+        setLoading(state);
     };
 
     const value: AuthContextType = {
         user,
         isAuthenticated: !!user,
         loading,
+        finishLoading,
         login,
         logout,
     };

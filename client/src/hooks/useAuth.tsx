@@ -2,10 +2,13 @@ import { useContext } from "react";
 import { AuthContext } from "@/contexts/AuthContext";
 
 export const useAuth = () => {
-    const authContext = useContext(AuthContext);
-    if (!authContext) {
-        throw new Error();
+    try {
+        const authContext = useContext(AuthContext);
+        if (!authContext) {
+            throw new Error();
+        }
+        return authContext;
+    } catch (error) {
+        console.log(error.message);
     }
-
-    return authContext;
 };

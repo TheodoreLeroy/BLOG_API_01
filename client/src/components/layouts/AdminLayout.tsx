@@ -1,7 +1,10 @@
-import { type JSX } from "react";
-import { Outlet } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect, type JSX } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 
 export default function AdminLayout() {
+    const { isAuthenticated, loading } = useAuth();
     return (
         <div
             id="auth-container"

@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
 
 export const LoginForm = () => {
-    const { login, loading, isAuthenticated } = useAuth();
+    const { login } = useAuth();
     const [failLogin, setFailLogin] = useState(false);
     // const [failLoginMessage, setFailLoginMessage] = useState<string | null>(
     //     null,
@@ -68,11 +68,11 @@ export const LoginForm = () => {
                         {errors.password.message as string}
                     </p>
                 )}
-                {failLogin ? (
+                {/* {failLogin ? (
                     <p className="text-2xl text-red-500 font-bold">dafuq</p>
                 ) : (
                     ""
-                )}
+                )} */}
                 <Button
                     type="submit"
                     variant="primary"

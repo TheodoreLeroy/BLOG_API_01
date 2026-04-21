@@ -14,44 +14,63 @@ const AdminSetting = lazy(() => import("@pages/admin/AdminSetting"));
 const ErrorPage = lazy(() => import("@pages/ErrorPage"));
 const AdminLayout = lazy(() => import("@components/layouts/AdminLayout"));
 const AuthLayout = lazy(() => import("@components/layouts/AuthLayout"));
+const AppLayout = lazy(() => import("@components/layouts/AppLayout"));
 const Home = lazy(() => import("@pages/user/Home"));
+const Blog = lazy(() => import("@pages/user/Blog"));
+const NewBlog = lazy(() => import("@pages/user/NewBlog"));
+const About = lazy(() => import("@pages/user/About"));
+const UserInfo = lazy(() => import("@pages/user/UserInfo"));
+const UserSetting = lazy(() => import("@pages/user/UserSetting"));
 
 function App() {
     return (
         <>
             {/* Login and register */}
 
-            <Suspense fallback={<LoadingSpinner />}>
-                <Routes>
-                    {/* Auth page */}
-                    <Route element={<AuthLayout />}>
-                        <Route path="/" element={<Login />} />
-                        {/* <Route path="/login" element={<Login />} /> */}
-                        <Route path="/register" element={<Register />} />
-                    </Route>
+            <AuthProvider>
+                <Suspense fallback={<LoadingSpinner />}>
+                    <Routes>
+                        {/* Auth pages */}
+                        <Route element={<AuthLayout />}>
+                            <Route path="/" element={<Login />} />
+                            <Route path="/register" element={<Register />} />
+                        </Route>
 
-                    <Route path="/home" element={<Home />} />
+                        {/* Admin pages */}
+                        <Route element={<AdminLayout />}>
+                            <Route
+                                path="/admin/dashboard"
+                                element={<Dashboard />}
+                            />
+                            <Route
+                                path="/admin/usermanager"
+                                element={<UserManager />}
+                            />
+                            <Route
+                                path="/admin/blogmanager"
+                                element={<BlogManager />}
+                            />
+                            <Route
+                                path="/admin/settings"
+                                element={<AdminSetting />}
+                            />
+                        </Route>
 
-                    {/* Admin page */}
-                    <Route
-                        path="/admin"
-                        element={
-                            <ProtectedRoute role="admin">
-                                <AdminLayout />
-                            </ProtectedRoute>
-                        }
-                    >
-                        <Route path="dashboard" element={<Dashboard />} />
-                        <Route path="user_manager" element={<UserManager />} />
-                        <Route path="blog_manager" element={<BlogManager />} />
-                        <Route path="setting" element={<AdminSetting />} />
-                    </Route>
+                        {/* User pages */}
+                        <Route element={<AppLayout />}>
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/blog" element={<Blog />} />
+                            <Route path="/post_blog" element={<NewBlog />} />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/user" element={<UserInfo />} />
+                            <Route path="/settings" element={<UserSetting />} />
+                        </Route>
 
-                    {/* Error page */}
-                    <Route path="/error" element={<ErrorPage />} />
-                    <Route path="*" element={<ErrorPage />} />
-                </Routes>
-            </Suspense>
+                        <Route path="/error" element={<ErrorPage />} />
+                        <Route path="*" element={<h1>Page not found</h1>} />
+                    </Routes>
+                </Suspense>
+            </AuthProvider>
         </>
     );
 }

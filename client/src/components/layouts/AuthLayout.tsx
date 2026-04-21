@@ -1,4 +1,5 @@
-import { type JSX } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect, type JSX } from "react";
 import { Outlet } from "react-router-dom";
 
 export default function AuthLayout() {

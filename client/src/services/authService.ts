@@ -21,7 +21,7 @@ interface LoginResponse {
 /auth/getme
 */
 
-export const AuthSerivce = {
+export const AuthService = {
     async login(data: LoginRequest): Promise<LoginResponse> {
         try {
             // Send login request

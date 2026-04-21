@@ -1,5 +1,6 @@
 import { Button } from "@/components/commons/Button";
 import { useAuth } from "@/hooks/useAuth";
+import { use } from "react";
 
 export default function Dashboard() {
     const { user, logout } = useAuth();
@@ -15,7 +16,11 @@ export default function Dashboard() {
                     onClick={logout}
                 />
             </div>
-            <p>{user?.name}</p>
+            <ul>
+                <li>{user.id}</li>
+                <li>{user.username}</li>
+                <li>{user.role}</li>
+            </ul>
         </>
     );
 }
