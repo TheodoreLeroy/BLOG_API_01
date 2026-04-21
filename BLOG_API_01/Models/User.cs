@@ -9,8 +9,9 @@ namespace BLOG_API_01.Models
         public string? Name { get; set; }
         [EmailAddress]
         public string? Email { get; set; }
-        public string? Password { get; set; }
-        public string UserName { get; set; } = string.Empty;
+        [Required]
+        public required string Password { get; set; }
+        public required string UserName { get; set; }
         public string? Role { get; set; }
         public virtual ICollection<Blog> blogId { get; set; }
     }

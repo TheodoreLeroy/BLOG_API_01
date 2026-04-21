@@ -4,7 +4,6 @@ import { useEffect, type JSX } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 
 export default function AdminLayout() {
-    const { isAuthenticated, loading } = useAuth();
     return (
         <div
             id="auth-container"

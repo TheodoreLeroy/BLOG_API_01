@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/features/LoginForm";
+import { RegisterForm } from "@/components/features/RegisterForm";
 
 function Register() {
     return (
@@ -7,7 +7,7 @@ function Register() {
             className=" bg-white rounded-3xl shadow-xl transition-all duration-300
                   w-200 h-250 flex justify-center items-center"
         >
-            <LoginForm />
+            <RegisterForm />
         </div>
     );
 }
