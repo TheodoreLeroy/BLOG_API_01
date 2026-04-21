@@ -1,4 +1,6 @@
-export const Input = ({ ...props }) => {
+export const Input = ({
+    ...props
+}: React.InputHTMLAttributes<HTMLInputElement>) => {
     return (
         <div
             className="h-16 text-xl bg-white border-2 rounded-xl 
@@ -7,6 +9,7 @@ export const Input = ({ ...props }) => {
                 flex items-center overflow-hidden"
         >
             <input
+                type=""
                 {...props}
                 className="w-full h-full px-5 bg-transparent outline-none text-gray-700 placeholder:text-gray-400"
             ></input>
